@@ -1,5 +1,6 @@
 package org.example.pruebabanco.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -27,5 +28,6 @@ public class PhoneEntity {
     private String contrycode;
 
     @ManyToMany(mappedBy = "phones")
+    @JsonIgnore // Evito la serialización recursiva
     private List<ClientEntity> clients;
 }
