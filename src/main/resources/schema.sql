@@ -1,0 +1,15 @@
+CREATE TABLE IF NOT EXISTS clients (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(150) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL
+    );
+
+CREATE TABLE IF NOT EXISTS phones (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    number VARCHAR(15) NOT NULL,
+    city_code VARCHAR(5) NOT NULL,
+    country_code VARCHAR(5) NOT NULL,
+    client_id BIGINT,
+    FOREIGN KEY (client_id) REFERENCES clients(id) ON DELETE CASCADE
+    );
