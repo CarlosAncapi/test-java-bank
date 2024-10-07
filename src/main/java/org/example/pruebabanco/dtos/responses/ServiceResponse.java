@@ -11,7 +11,10 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class ServiceResponse {
+public class ServiceResponse<T> {
     @JsonProperty("mensaje")
     private String message;
+
+    @JsonProperty("data")
+    private T data;
 }

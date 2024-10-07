@@ -10,6 +10,7 @@ import org.example.pruebabanco.util.VerificationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -30,8 +31,8 @@ public class ClientsServiceImpl implements ClientsService {
                     if(VerificationUtil.verifyFormatEmail(client.getEmail())){
                         if(VerificationUtil.verifyPasswordSecurity(client.getPassword())){
                             ClientEntity clientMapped = MappUserDTO.mappUserReq(client);
+                            mensaje = "Usuario grabado correctamente en la Base de datos";
                             clientEntity = clientRepository.save(clientMapped);
-                            mensaje = clientEntity.toString();
                         }else{
                             mensaje = "la clave debe contener al menos : 1 Mayúscula, 2 letras minúsculas, y 2 números";
                         }
@@ -48,6 +49,21 @@ public class ClientsServiceImpl implements ClientsService {
             mensaje = "No se entregaron datos del cliente en la solicitud de grabación";
         }
         response.setMessage(mensaje);
+        response.setData(clientEntity);
+        return response;
+    }
+
+    @Override
+    public ServiceResponse getAllUsers() {
+        ServiceResponse response = new ServiceResponse();
+        List<ClientEntity> clients = clientRepository.findAll();
+        if(!clients.isEmpty()){
+            response.setMessage("Se encontraron los siguientes clientes en la base de datos");
+            response.setData(clients);
+        }else {
+            response.setMessage("No se encontr´ningún cliente en la base de datos ");
+            response.setData(null);
+        }
         return response;
     }
 
