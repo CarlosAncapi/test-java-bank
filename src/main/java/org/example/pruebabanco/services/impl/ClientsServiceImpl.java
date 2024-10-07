@@ -21,7 +21,7 @@ public class ClientsServiceImpl implements ClientsService {
     @Override
     public ServiceResponse saveClient(ClientReq client) {
         ServiceResponse response = new ServiceResponse();
-        ClientEntity clientEntity = null;
+        ClientEntity clientEntity = new ClientEntity();
         String mensaje = "";
         if(client != null){
             Optional<ClientEntity> existingClient = clientRepository.findByEmail(client.getEmail());
