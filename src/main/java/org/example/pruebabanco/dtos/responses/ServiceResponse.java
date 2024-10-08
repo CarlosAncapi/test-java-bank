@@ -18,3 +18,4 @@ public class ServiceResponse<T> {
     @JsonProperty("data")
     private T data;
 }
+//TODO: ver como convertir a excepción global

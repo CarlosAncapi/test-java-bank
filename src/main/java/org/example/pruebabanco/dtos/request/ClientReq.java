@@ -1,11 +1,13 @@
 package org.example.pruebabanco.dtos.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
+import lombok.*;
 
 import java.util.List;
 
-@Data
+
+@Getter
+@AllArgsConstructor
 public class ClientReq {
 
     @JsonProperty("name")
