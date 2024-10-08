@@ -1,9 +1,12 @@
 package org.example.pruebabanco.dtos.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 
-@Data
+@Getter
+@AllArgsConstructor
 public class PhonesReq {
 
     @JsonProperty("number")
