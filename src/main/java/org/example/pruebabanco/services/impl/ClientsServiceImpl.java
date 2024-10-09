@@ -9,7 +9,6 @@ import org.example.pruebabanco.entities.ClientEntity;
 import org.example.pruebabanco.repositories.ClientsRepository;
 import org.example.pruebabanco.services.ClientsService;
 import org.example.pruebabanco.util.VerificationUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -37,9 +36,10 @@ public class ClientsServiceImpl implements ClientsService {
                 mensaje = "Usuario grabado correctamente en la Base de datos";
                 clientEntity = clientRepository.save(clientMapped);
             } else {
-                // TODO: realizar metodo para personalizar mensaje de error
-                mensaje = "No se entregaron datos del cliente en la solicitud de grabación";
+                mensaje = errorMessage(optionalClient, client);
             }
+        }else{
+            mensaje = "No se entregaron datos del cliente en la solicitud de grabación";
         }
         response.setMessage(mensaje);
         response.setData(clientEntity);
@@ -58,6 +58,20 @@ public class ClientsServiceImpl implements ClientsService {
             response.setData(null);
         }
         return response;
+    }
+
+    private String errorMessage(Optional<ClientEntity> optionalClient, ClientReq client){
+        String mensaje = "";
+        if(optionalClient.isPresent()){
+            mensaje = "El cliente ya existe en la base de datos";
+        } else if (client.getPhones().isEmpty()){
+            mensaje="El cliente no tiene información de algún teléfono";
+        } else if (!VerificationUtil.verifyFormatEmail(client.getEmail())) {
+            mensaje="El correo no cumple con el siguiente formato : aaaaa@dominio.cl";
+        } else if (!VerificationUtil.verifyPasswordSecurity(client.getPassword())) {
+            mensaje = "La contraseña entregada debe tener el siguiente formato: Al menos Una Mayúscula, 2 letras minúsculas, y dos números";
+        }
+        return mensaje;
     }
 
 
